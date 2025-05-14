@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hyperlocal SMB Platform - Create Campaign</title>
+    <link rel="stylesheet" href="{{ url_for("static", filename="css/style.css") }}">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="logo">Platform Logo</div>
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for("dashboard") }}">Dashboard</a></li>
+                    <li class="active"><a href="{{ url_for("campaigns") }}">Campaigns</a></li>
+                    <li><a href="#">Audience Insights</a></li>
+                    <li><a href="#">Reports</a></li>
+                    <li><a href="#">Settings</a></li>
+                    <li><a href="#">Help/Support</a></li>
+                </ul>
+            </nav>
+        </aside>
+        <main class="main-content">
+            <header>
+                <h1>Create New Campaign</h1>
+                <div class="user-profile">
+                    <span>User Name</span>
+                    <img src="#" alt="User Avatar">
+                </div>
+            </header>
+            
+            <form id="createCampaignForm" action="{{ url_for("create_campaign_submit") }}" method="POST">
+                <!-- Step 1: Campaign Basics -->
+                <section id="step1" class="campaign-step active-step">
+                    <h2>Step 1: Campaign Basics</h2>
+                    <div>
+                        <label for="campaignName">Campaign Name:</label>
+                        <input type="text" id="campaignName" name="campaign_name" required>
+                    </div>
+                    <div>
+                        <label for="marketingGoal">Marketing Goal:</label>
+                        <select id="marketingGoal" name="marketing_goal">
+                            <option value="store_visits">Increase Store Visits</option>
+                            <option value="lead_generation">Generate Leads</option>
+                            <option value="product_promotion">Promote Product/Service</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="totalBudget">Total Budget (₹):</label>
+                        <input type="number" id="totalBudget" name="total_budget" min="100" required>
+                    </div>
+                    <div>
+                        <label for="startDate">Start Date:</label>
+                        <input type="date" id="startDate" name="start_date" required>
+                    </div>
+                    <div>
+                        <label for="endDate">End Date:</label>
+                        <input type="date" id="endDate" name="end_date" required>
+                    </div>
+                    <button type="button" onclick="nextStep()">Next</button>
+                </section>
+
+                <!-- Step 2: Define Audience & Location -->
+                <section id="step2" class="campaign-step">
+                    <h2>Step 2: Define Audience & Location</h2>
+                    <div>
+                        <label for="location">Business Location (Address or Pincode):</label>
+                        <input type="text" id="location" name="location" placeholder="e.g., 123 Main St, Bangalore or 560001">
+                        <small>AI will help refine targeting based on this.</small>
+                    </div>
+                    <div>
+                        <label for="radius">Target Radius (km):</label>
+                        <select id="radius" name="radius">
+                            <option value="1">1 km</option>
+                            <option value="3">3 km</option>
+                            <option value="5">5 km</option>
+                            <option value="10">10 km</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="interests">Audience Interests (comma-separated):</label>
+                        <input type="text" id="interests" name="interests" placeholder="e.g., food, shopping, local events">
+                        <small>AI will suggest relevant local interest groups.</small>
+                    </div>
+                    <p>Estimated Audience Size: <span id="estimatedAudience">Calculating...</span></p>
+                    <button type="button" onclick="prevStep()">Previous</button>
+                    <button type="button" onclick="nextStep()">Next</button>
+                </section>
+
+                <!-- Step 3: Select Channels & Ad Creatives -->
+                <section id="step3" class="campaign-step">
+                    <h2>Step 3: Select Channels & Ad Creatives</h2>
+                    <div>
+                        <label>Suggested Channels (AI-Powered):</label>
+                        <div id="suggestedChannels">
+                            <!-- Channels will be populated by JS/Backend -->
+                            <p>Loading channel suggestions...</p>
+                        </div>
+                        <small>Select channels for your campaign.</small>
+                    </div>
+                    <div>
+                        <label for="adHeadline">Ad Headline:</label>
+                        <input type="text" id="adHeadline" name="ad_headline" maxlength="100">
+                        <small>AI can help generate compelling headlines.</small>
+                    </div>
+                    <div>
+                        <label for="adBody">Ad Body Text:</label>
+                        <textarea id="adBody" name="ad_body" rows="4" maxlength="500"></textarea>
+                    </div>
+                    <div>
+                        <label for="adImage">Ad Image/Video (Optional Link):</label>
+                        <input type="url" id="adImage" name="ad_image_url" placeholder="https://example.com/image.jpg">
+                    </div>
+                    <button type="button" onclick="prevStep()">Previous</button>
+                    <button type="button" onclick="nextStep()">Next</button>
+                </section>
+
+                <!-- Step 4: Review & Launch -->
+                <section id="step4" class="campaign-step">
+                    <h2>Step 4: Review & Launch</h2>
+                    <div id="campaignSummary">
+                        <p><strong>Campaign Name:</strong> <span id="summaryCampaignName"></span></p>
+                        <p><strong>Marketing Goal:</strong> <span id="summaryMarketingGoal"></span></p>
+                        <p><strong>Total Budget:</strong> ₹<span id="summaryTotalBudget"></span></p>
+                        <p><strong>Dates:</strong> <span id="summaryStartDate"></span> to <span id="summaryEndDate"></span></p>
+                        <p><strong>Location:</strong> <span id="summaryLocation"></span>, Radius: <span id="summaryRadius"></span> km</p>
+                        <p><strong>Interests:</strong> <span id="summaryInterests"></span></p>
+                        <p><strong>Selected Channels:</strong> <span id="summaryChannels"></span></p>
+                        <p><strong>Ad Headline:</strong> <span id="summaryAdHeadline"></span></p>
+                    </div>
+                    <button type="button" onclick="prevStep()">Previous</button>
+                    <button type="submit">Launch Campaign</button>
+                </section>
+            </form>
+        </main>
+    </div>
+    <script src="{{ url_for("static", filename="js/create_campaign.js") }}"></script> 
+</body>
+</html>

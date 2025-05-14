@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hyperlocal SMB Platform - Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for("static", filename="css/style.css") }}">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="logo">Platform Logo</div>
+            <nav>
+                <ul>
+                    <li class="active"><a href="{{ url_for("dashboard") }}">Dashboard</a></li>
+                    <li><a href="{{ url_for("campaigns") }}">Campaigns</a></li>
+                    <li><a href="#">Audience Insights</a></li>
+                    <li><a href="#">Reports</a></li>
+                    <li><a href="#">Settings</a></li>
+                    <li><a href="#">Help/Support</a></li>
+                </ul>
+            </nav>
+        </aside>
+        <main class="main-content">
+            <header>
+                <h1>Dashboard</h1>
+                <div class="user-profile">
+                    <span>User Name</span>
+                    <img src="#" alt="User Avatar">
+                </div>
+            </header>
+            <section class="kpi-widgets">
+                <div class="widget">
+                    <h2>Active Campaigns</h2>
+                    <p>5</p>
+                </div>
+                <div class="widget">
+                    <h2>Total Budget Spent</h2>
+                    <p>₹12,500</p>
+                </div>
+                <div class="widget">
+                    <h2>Leads Generated</h2>
+                    <p>150</p>
+                </div>
+                <div class="widget">
+                    <h2>Store Visits (Est.)</h2>
+                    <p>75</p>
+                </div>
+            </section>
+            <section class="actions">
+                <a href="{{ url_for("create_campaign") }}" class="btn-primary">Create New Campaign</a>
+            </section>
+            <section class="recent-campaigns">
+                <h2>Recent Campaigns</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Campaign Name</th>
+                            <th>Status</th>
+                            <th>End Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Summer Sale Promotion</td>
+                            <td>Active</td>
+                            <td>2025-05-30</td>
+                            <td><a href="#">View</a></td>
+                        </tr>
+                        <!-- More rows as needed -->
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </div>
+    <script src="{{ url_for("static", filename="js/script.js") }}"></script>
+</body>
+</html>
